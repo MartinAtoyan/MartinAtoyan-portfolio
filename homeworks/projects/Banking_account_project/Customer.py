@@ -1,4 +1,4 @@
-from homeworks.projects.Banking_account_project.account.Account import Account
+from homeworks.projects.Banking_account_project.Account import Account
 
 
 class Customer:
