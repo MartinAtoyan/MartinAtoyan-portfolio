@@ -1,8 +1,8 @@
-from homeworks.projects.Banking_account_project.Account import Account
+from homeworks.projects.Banking_account_project.Account import Account, TransactionManager
 from homeworks.projects.Banking_account_project.Transaction import Transaction
 
 
-class Customer():
+class Customer:
     def __init__(self, name: str,
                  contact_info: str,
                  accounts: list[Account]):
@@ -20,6 +20,7 @@ class Customer():
                   f"Account balance - {account.show_balance()} \n"
                   f"Account type - {account.get_account_type()}")
 
-    # def view_transaction_history(self) -> None:
-    #     for account in self.__accounts:
-    #         print(account.log())
+    def view_transaction_history(self) -> None:
+        for account in self.__accounts:
+            if isinstance(account, TransactionManager):
+                print(f"History for {account.show_transaction_history()}")
