@@ -1,6 +1,5 @@
 import abc
 from datetime import datetime
-import user, Conversation_user
 from homeworks.projects.Messaging_Application.user import User, Conversation
 
 

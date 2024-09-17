@@ -1,4 +1,3 @@
-import message, user
 from homeworks.projects.Messaging_Application.message import Message
 from homeworks.projects.Messaging_Application.user import User
 

@@ -1,7 +1,6 @@
 from typing import List
 
 from orca.chat import Conversation
-import message
 from homeworks.projects.Messaging_Application.message import Message
 
 

@@ -2,9 +2,15 @@ import abc
 
 class Account(abc.ABC):
     def __init__(self, account_number: int, balance: float, account_type: str):
-        self.account_number = account_number
+        if account_number > 0:
+            self.account_number = account_number
+        else:
+            print("Account id must be positive number")
+
         self.__balance = balance
-        self.__account_type = account_type
+
+        if type(account_type) is str:
+            self.__account_type = account_type
 
     @abc.abstractmethod
     def deposit(self, amount: float) -> None:
@@ -48,21 +54,21 @@ class CheckingAccount(Account):
             print(f"You can't withdraw from your balance {amount}. Your total balance less then withdraw amount")
 
 
-    def transfer(self, destination: "Account", amount: float) -> None:
+    def transfer(self, to_account: "Account", amount: float) -> None:
         if self.__balance > amount:
             self.__balance -= amount
-            destination.deposit(amount)
+            to_account.deposit(amount)
             print(f"You transferred {amount}")
         elif self.__total > amount:
             self.__total -= amount
-            destination.deposit(amount)
+            to_account.deposit(amount)
             print(f"You transferred with overdraft.")
         else:
             print(f"You can't transfer. Transfer amount is more than total balance.")
 
 
     def show_balance(self) -> None:
-        print(f"Your balance is {self.show_balance()} \n Your total balance is {self.__total}")
+        print(f"Your balance is {self.__balance} \n Your total balance is {self.__total}")
 
 
     def get_account_type(self) -> str:
@@ -86,11 +92,11 @@ class SavingsAccount(Account):
         else:
             print("Insufficient balance.")
 
-    def transfer(self, destination: 'Account', amount: float) -> None:
+    def transfer(self, to_account: 'Account', amount: float) -> None:
         if self.__balance >= amount:
             self.__balance -= amount
-            destination.deposit(amount)
-            print(f"Transferred {amount} to account {destination.account_number}.")
+            to_account.deposit(amount)
+            print(f"Transferred {amount} to account {to_account.account_number}.")
         else:
             print("Insufficient balance.")
 
