@@ -1,4 +1,8 @@
+import math
 from typing import Any, Iterator, List, Union
+
+from softwareproperties.gtk.utils import retry
+
 
 class DynamicArray:
     def __init__(self, capacity: int = 10):
@@ -9,10 +13,22 @@ class DynamicArray:
         self.__array: List[Any] = [None] * capacity
 
     def __getitem__(self, index):
-        #????
+        if index > self.__size:
+            raise "Out of range"
+        elif 0 <= index <= self.__size - 1:
+            return self.__array[index]
+        elif index < 0:
+            return self.__array[self.__size - index - 1]
 
     def __setitem__(self, key, value):
-        #???
+        if key > self.__size - 1:
+            raise "out of range"
+        elif self.__size - 1 > key >= 0:
+            self.__array[key] = value
+        elif key < 0 and abs(key) < self.__size:
+            self.__array[self.__size + key] = value
+        else:
+            raise "out of range"
 
     def __len__(self):
         return self.__size
