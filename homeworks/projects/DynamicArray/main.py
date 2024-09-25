@@ -1,53 +1,46 @@
-import math
-from typing import Any, Iterator, List, Union
-
-from softwareproperties.gtk.utils import retry
+import math, array
+from typing import Iterator, Any
 
 
 class DynamicArray:
     def __init__(self, capacity: int = 10):
         if capacity <= 0:
-            raise ValueError("Capacity must be positive integer.")
+            raise ValueError("Capacity must be positive.")
         self.__capacity = capacity
         self.__size = 0
-        self.__array: List[Any] = [None] * capacity
+        self.__array = [0] * capacity
 
     def __getitem__(self, index):
-        if index > self.__size:
-            raise "Out of range"
-        elif 0 <= index <= self.__size - 1:
-            return self.__array[index]
-        elif index < 0:
-            return self.__array[self.__size - index - 1]
+        if isinstance(index, int):
+            if index >= 0 and index > self.__size:
+                raise IndexError
+            elif index < 0 and abs(index) <= self.__size:
+                return self.__array[index]
+            elif 0 <= index < self.__size:
+                return self.__array[index]
+        raise TypeError
 
-    def __setitem__(self, key, value):
-        if key > self.__size - 1:
-            raise "out of range"
-        elif self.__size - 1 > key >= 0:
-            self.__array[key] = value
-        elif key < 0 and abs(key) < self.__size:
-            self.__array[self.__size + key] = value
+    def __setitem__(self, index: int, value: int):
+        if isinstance(value, int) and isinstance(index, int):
+            if index < -self.__size or index >= self.__size:
+                raise IndexError
+            self.__array[index] = value
         else:
-            raise "out of range"
+            raise TypeError
 
     def __len__(self):
         return self.__size
 
-    def __new_size(self, new_size):
-        new_list = [None] * new_size
-        for i in range(new_size):
-            new_list[i] = self.__array[i]
+    def resize(self):
+        new_capacity = 2 * self.__capacity
+        new_list = self.__capacity * [0]
+        for i in range(self.__size):
+            new_list[i: int] = self.__array[i]
         self.__array = new_list
-        self.__size = new_size
+        self.__capacity = new_capacity
 
-    def append(self, item):
-        if self.__size == self.__capacity:
-            self.__new_size(2 * self.__capacity)
-        self.__array[self.__size] = item
-        self.__size += 1
 
     def __str__(self) -> str:
-
         return str([self.__array[i] for i in range(self.__size)])
 
     def __repr__(self) -> str:
@@ -55,22 +48,30 @@ class DynamicArray:
 
     def __add__(self, other: 'DynamicArray') -> 'DynamicArray':
         if isinstance(other, DynamicArray):
-            new_array = DynamicArray(self.__size + other.__size)
+            new_capacity = self.__capacity + other.__capacity
+            new_array = DynamicArray(new_capacity)
+            new_array.__size = self.__size + other.__size
             for i in range(self.__size):
-                new_array.append(self.__array[i])
+                new_array.__array[i] = self.__array[i]
             for i in range(other.__size):
-                new_array.append(other.__array[i])
+                new_array.__array[self.__size + i] = other.__array[i]
             return new_array
-        raise TypeError("Can only concatenate with another DynamicArray.")
+        raise TypeError
 
     def __iadd__(self, other: 'DynamicArray') -> 'DynamicArray':
-        if isinstance(other, DynamicArray):
-            for i in range(other.__size):
-                self.append(other.__array[i])
-            return self
-        raise TypeError("Can only concatenate with another DynamicArray.")
+        result = self.__add__(other)
+        self.__array = result.__array
+        self.__size = result.__size
+        self.__capacity = result.__capacity
+        return self
 
-    def __eq__(self, other: Any) -> bool:
+    def append(self, value: int):
+        if self.__size == self.__capacity:
+            self.resize()
+        self.__array[self.__size] = value
+        self.__size += 1
+
+    def __eq__(self, other) -> bool:
         if not isinstance(other, DynamicArray):
             return False
         if self.__size != other.__size:
@@ -85,7 +86,6 @@ class DynamicArray:
             return NotImplemented
         return self.__array[:self.__size] < other.__array[:other.__size]
 
-    # Implement other rich comparison methods (<=, >, >=) similarly.
     def __le__(self, other: 'DynamicArray') -> bool:
         return self < other or self == other
 
@@ -109,6 +109,18 @@ class DynamicArray:
 
     def __hash__(self) -> int:
         raise TypeError("DynamicArray objects are mutable and cannot be hashed")
+
+
+# arr1 = DynamicArray()
+# arr2 = DynamicArray()
+# arr1.append(20)
+# arr2.append(50)
+# print(arr1)
+# print(arr2)
+# print(arr1 + arr2)
+# arr1 += arr2
+# print(arr1)
+# print(arr1.__getitem__(1))
 
 
 
