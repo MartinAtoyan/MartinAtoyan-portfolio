@@ -71,6 +71,67 @@
 # small_shelf.show_books()
 
 
+# class Singleton:
+#     __instance = None
+#     def __new__(cls, *args, **kwargs):
+#         if not cls.__instance:
+#             cls.__instance = super(Singleton, cls).__new__(cls)
+#         return cls.__instance
+
+
+
+class Mlass:
+    def __init__(self, fget=None, fset=None, fdel=None, doc=None):
+        self.fget = fget
+        self.fset = fset
+        self.fdel = fdel
+        self.__doc__ = doc  # Use __doc__ to store the documentation
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self  # When accessed through the class, return the descriptor itself
+        if self.fget is None:
+            raise AttributeError("The attribute is not readable")
+        return self.fget(instance)
+
+    def __set__(self, instance, value):
+        if self.fset is None:
+            raise AttributeError("The attribute is not writable")
+        self.fset(instance, value)
+
+    def __delete__(self, instance):
+        if self.fdel is None:
+            raise AttributeError("The attribute cannot be deleted")
+        self.fdel(instance)
+
+# Example Usage
+class Person:
+    def __init__(self, name):
+        self._name = name
+
+    def get_name(self):
+        return self._name
+
+    def set_name(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Name must be a string")
+        self._name = value
+
+    def del_name(self):
+        print("Deleting name...")
+        del self._name
+
+    name = Mlass(get_name, set_name, del_name, "Property for managing the name")
+
+# Usage
+p = Person("Alice")
+print(p.name)  # Output: Alice
+
+p.name = "Bob"
+print(p.name)  # Output: Bob
+
+del p.name  # Output: Deleting name...
+
 
 
 
