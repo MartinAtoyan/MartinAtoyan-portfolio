@@ -11,7 +11,7 @@ products = [
 ]
 
 class CRUDHandler(BaseHTTPRequestHandler):
-    def __set_headers(self, status = 20):
+    def __set_headers(self, status = 200):
         self.send_response(status)
         self.send_header("Content-type", "application/json")
         self.end_headers()

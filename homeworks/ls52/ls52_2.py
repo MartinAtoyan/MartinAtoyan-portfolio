@@ -26,14 +26,20 @@ def get_users():
 
 @app.get("/users/{user_id}")
 def get_user(user_id:int):
-    user = None
-    for u in users:
-        if u["id"] == user_id:
-            user = u
-            break
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return user
+    # user = None
+    # for u in users:
+    #     if u["id"] == user_id:
+    #         user = u
+    #         break
+    # if not user:
+    # return user
+
+    for user in users:
+        if user["id"] == user_id:
+            return user
+        
+    raise HTTPException(status_code=404, detail="User not found")
+            
 
 @app.put("/users/{user_id}")
 def create_user(user: User):
