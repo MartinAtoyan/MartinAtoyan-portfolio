@@ -1,13 +1,21 @@
-from fastapi import FastAPI, HTTPException, status, Request
+from fastapi import FastAPI, Request
 import json
 from errors import *
 import aiofiles
-
+import os
+from dotenv import load_dotenv
 
 app = FastAPI()
 
-USERS_FILE = "homeworks/ls53/users.json"
-TASKS_FILE = "homeworks/ls53/tasks.json"
+load_dotenv()
+
+# USERS_FILE = "homeworks/ls53/users.json"
+# TASKS_FILE = "homeworks/ls53/tasks.json"
+HOST = os.getenv("HOST")
+PORT = int(os.getenv("PORT"))
+USERS_FILE = os.getenv("USERS_FILE")
+TASKS_FILE = os.getenv("TASKS_FILE")
+
 
 async def read_json(file):
     try: 
@@ -212,13 +220,13 @@ async def delete_task(task_id:int):
 
 
 
-@app.post("/register")
+@app.post("/users/register")
 async def register_user(data:Request):
     return await create_user(data)
 
 
 
-@app.post("/login")
+@app.post("/users/login")
 async def login(data:Request):
     
     data = await unpack_json(data)
