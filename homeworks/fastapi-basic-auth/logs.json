@@ -1,0 +1,16 @@
+[
+  {
+    "event": "registration",
+    "username": "abo",
+    "status": "success"
+  },
+  {
+    "event": "login",
+    "username": "abo",
+    "status": "successfully"
+  },
+  {
+    "event": "secure_page_access",
+    "username": "abo"
+  }
+]

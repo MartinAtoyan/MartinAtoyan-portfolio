@@ -1,0 +1,14 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "$5$rounds=535000$bxB5sGk2EuZPaiNC$LdPTD55TL1X9il8q8VOWmu6LkF0LsP3A1fd0okGOW7."
+  },
+  "xcho": {
+    "username": "xcho",
+    "password": "$5$rounds=535000$LOvHbAt9GnOcOI2n$C9dRU2KcbZUE5Wt/hekii1H5X7cIZRu38OsP8Ystxr0"
+  },
+  "abo": {
+    "username": "abo",
+    "password": "$5$rounds=535000$ZXtM5BMikPyjQKNZ$3W91ACXpkDGSBF5GDPpvCMd20T3SuAdXZJeSGkiCCl0"
+  }
+}
