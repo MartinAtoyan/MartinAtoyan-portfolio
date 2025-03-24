@@ -1,0 +1,45 @@
+https://www.tutorialspoint.com/how-to-detect-license-plates-using-opencv-python 
+
+https://github.com/Maleehak/Car-number-plate-recognition-using-OpenCV
+
+https://medium.com/augmented-startups/automatic-number-plate-recognition-with-easy-ocr-and-open-cv-6d121384cdc7
+
+https://www.youtube.com/watch?v=73REqZM1Fy0
+
+# reader = easyocr.Reader(["en", "ru"])
+    # res = reader.readtext(gray_plate)
+    #
+    # plate = res[0][1]
+    # font = cv2.FONT_HERSHEY_DUPLEX
+    #
+    # put_plate = cv2.putText(gray_plate, text = plate, fontFace = font, fontScale = 1, color = (0, 255, 0), thickness = 5)
+    #
+    # put_plate = cv2.rectangle(gray_plate, color=(0, 255, 0), thickness=3)
+    #
+    # cv2.imshow(cv2.cvtColor(put_plate, cv2.COLOR_BGR2RGB))
+    #
+    # reader = easyocr.Reader(["en", "ru"])
+    #
+    # # Read text from the grayscale image
+    # res = reader.readtext(gray_plate)
+    #
+    # # Check if text is detected before accessing res[0]
+    # if res:
+    #   plate = res[0][1]  # Extract text
+    # else:
+    #   plate = "No Text Detected"
+    #
+    # font = cv2.FONT_HERSHEY_DUPLEX
+    #
+    # # Draw text on the plate image
+    # put_plate = cv2.putText(gray_plate.copy(), text=plate, org=(50, 50),
+    #                         fontFace=font, fontScale=1, color=(0, 255, 0), thickness=2)
+    #
+    # # Draw a rectangle around the detected plate (Example coordinates)
+    # x1, y1, x2, y2 = 10, 10, 200, 100  # Replace with actual bounding box
+    # put_plate = cv2.rectangle(put_plate, (x1, y1), (x2, y2), color=(0, 255, 0), thickness=3)
+    #
+    # # Convert image to RGB for display
+    # rgb_image = cv2.cvtColor(put_plate, cv2.COLOR_BGR2RGB)
+
+    # cv2.imshow("Image", rgb_image)
