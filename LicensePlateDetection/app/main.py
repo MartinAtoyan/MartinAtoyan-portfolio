@@ -9,6 +9,7 @@ load_dotenv()
 
 cascade_ref = os.environ.get("CASCADE")
 images = os.environ.get("IMAGES")
+counter = 0
 
 for image_dir in os.listdir(images):
 
@@ -29,7 +30,9 @@ for image_dir in os.listdir(images):
     gray_plate = gray_image[y:y + h, x:x + w]
     color_plate = image[y:y + h, x:x + w]
 
-    cv2.imwrite('Numberplate.jpg', gray_plate)
+    cv2.imwrite(f'Numberplate{counter}.jpg', gray_plate)
+    counter += 1
+
     gray_plate = cv2.cvtColor(gray_plate, cv2.COLOR_RGB2GRAY)
     processed = cv2.adaptiveThreshold(gray_plate, 255, 
                                       cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
